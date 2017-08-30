@@ -8,6 +8,22 @@
   <title>Document</title>
 </head>
 <body>
-  <h1>hello ejs</h1>
+  <h1>hello Express</h1>
+  <table>
+    <thead>
+      <tr>
+        <td>Long URL</td>
+        <td>Short URL</td>
+      </tr>
+    </thead>
+    <tbody>
+      <% data.forEach(item => { %>
+      <tr>
+      <td><%= item.longURL %></td>
+      <td><%= item.id %></td>
+      </tr>
+      <% }) %> 
+    </tbody>
+  </table>
 </body>
 </html>
