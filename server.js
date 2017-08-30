@@ -16,20 +16,21 @@ const data = [
 
 const app = express()
 
-
-app.use(basicAuth({
+const authMiddleware = basicAuth({
   users: { 'admin': 'admin' },
   challenge: true,
   realm: 'Imb4T3st4pp'
-}))
+})
+
+const bodyParserMiddleWare = bodyParser.urlencoded({ extended: false })
 
 app.set('view engine', 'ejs')
 app.use('/static', express.static('public'))
 app.use(morgan('tiny'))
-app.use(bodyParser.urlencoded({ extended: false }))
 
 
-app.get('/', (req, res) => {
+
+app.get('/', authMiddleware, (req, res) => {
   res.render('index.ejs', {data})
 })
 
@@ -44,7 +45,7 @@ app.get('/:id', (req, res) => {
   }
 })
 
-app.post('/', (req, res) => {
+app.post('/', bodyParserMiddleWare, authMiddleware, (req, res) => {
   const longURL = req.body.longURL
   let id;
 
